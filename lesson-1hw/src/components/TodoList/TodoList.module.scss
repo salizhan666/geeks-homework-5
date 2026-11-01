@@ -1,0 +1,57 @@
+.todoList {
+    min-width: 300px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    &__empty {
+        text-align: center;
+        opacity: 0.4;
+        font-size: 14px;
+    }
+
+    &__item {
+        padding: 8px;
+        border: 1px solid #333;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: 0.2s;
+
+        &__title {
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            &__button {
+                width: 20px;
+                height: 20px;
+                border: 1px solid #222;
+            }
+
+            h3 {
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+        }
+
+        &.active {
+            h3 {
+                text-decoration: line-through;
+                opacity: 0.7;
+            }
+        }
+
+        &:hover {
+            border-color: #4096ff;
+            box-shadow: 0 0 0 2px rgba(5, 84, 255, 0.1);
+        }
+    }
+
+}

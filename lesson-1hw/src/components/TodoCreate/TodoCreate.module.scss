@@ -1,0 +1,12 @@
+.todoCreate {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &__add {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+}
