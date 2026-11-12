@@ -1,0 +1,56 @@
+body {
+  text-align: center;
+  margin: 0 auto;
+}
+
+ul li {
+  list-style: none;
+}
+
+.todo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.todo__item {
+  width: 500px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-align: start;
+}
+
+.todo__item button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+
+.todo__item span {
+  overflow-wrap: anywhere;
+  flex: 1;
+}
+
+.todo__checkbox {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.todo__done {
+  text-decoration: line-through;
+}
+
+.todo__pagination button {
+  background: transparent;
+  color: inherit;
+  border: 1px solid #aaa;
+  padding: 5px 10px;
+}
+
+.todo__pagination button:disabled {
+  color: #777;
+}
