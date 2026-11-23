@@ -1,9 +1,30 @@
-import { ShoppingCartOutlined } from "@ant-design/icons"
+import { ShoppingCartOutlined, HeartOutlined, HeartFilled } from "@ant-design/icons"
+import { useToggleFavotire } from "../store/favorites/toggle-favorite"
 
 export const ProductCard = ({ product }) => {
+
+  const { mutate, isPending } = useToggleFavotire()
+
   return (
     <article className="group flex h-full w-full max-w-sm flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <div className="flex aspect-square items-center justify-center overflow-hidden bg-slate-50 p-6">
+      <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-slate-50 p-6">
+
+        {
+          product?.isFavorite ?
+            <HeartFilled
+              style={{ color: '#ef4444' }}
+              className="scaleUp absolute right-3 top-3 z-10 rounded-full bg-white p-3 text-xl shadow-sm cursor-pointer"
+              onClick={() => mutate(product?.isFavorite, product?._id)}
+              disabled={isPending}
+            />
+            :
+            <HeartOutlined
+              className="scaleUp absolute right-3 top-3 z-10 rounded-full bg-white p-3 text-xl text-teal-700 shadow-sm cursor-pointer"
+              onClick={() => mutate(product?.isFavorite, product?._id)}
+              disabled={isPending}
+            />
+        }
+
         <img src={product?.image} alt={product?.name} className="h-full w-full object-contain transition-transform duration-300 motion-safe:group-hover:scale-105 motion-reduce:transition-none" />
       </div>
       <div className="flex flex-1 flex-col p-5">

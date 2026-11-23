@@ -33,6 +33,10 @@ header a.active::after {
     animation: slideUp 0.4s ease-out both;
 }
 
+.scaleUp {
+    animation: scaleUp 0.3s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
     header a::after {
         transition: none;
@@ -48,5 +52,23 @@ header a.active::after {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        scale: 0;
+    }
+
+    60% {
+        scale: 1.15;
+    }
+
+    80% {
+        scale: 0.95;
+    }
+
+    to {
+        scale: 1;
     }
 }

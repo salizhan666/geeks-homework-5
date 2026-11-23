@@ -1,4 +1,4 @@
-import { useFilterStore } from "../../store/use-filter-store"
+import { useFilterStore } from "../../hooks/useFilter"
 import { ConfigProvider, Input } from "antd"
 
 const { Search } = Input

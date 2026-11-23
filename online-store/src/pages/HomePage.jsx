@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query"
 import { productService } from "../service/product-service"
 import { ProductCard } from "../components/ProductCard"
-import { useFilterStore } from "../store/use-filter-store"
-import { ConfigProvider, Spin } from "antd"
+import { useFilterStore } from "../hooks/useFilter"
 import { SearchFilter } from "../components/filter/SearchFilter"
 import { CategoryFilter } from "../components/filter/CategoryFilter"
 import { PriceFilter } from "../components/filter/PriceFilter"
+import { Loading } from "../components/Loading"
 
 export const HomePage = () => {
 
   const filterStore = useFilterStore((state) => state.filter)
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading } = useQuery({
     ...productService.getProductsQueryOptions(filterStore)
   })
 
@@ -23,13 +23,7 @@ export const HomePage = () => {
         <PriceFilter />
       </div>
 
-      {isLoading && (
-        <div className="flex min-h-64 w-full items-center justify-center">
-          <ConfigProvider theme={{ token: { colorPrimary: 'var(--color-teal-500)' } }}>
-            <Spin size="large" />
-          </ConfigProvider>
-        </div>
-      )}
+      <Loading isLoading={isLoading} />
 
       {
         data?.data?.length === 0 ? (

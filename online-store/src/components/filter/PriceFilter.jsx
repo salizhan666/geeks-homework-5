@@ -1,4 +1,4 @@
-import { useFilterStore } from '../../store/use-filter-store'
+import { useFilterStore } from '../../hooks/useFilter'
 
 export const PriceFilter = () => {
 

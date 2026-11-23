@@ -1,11 +1,11 @@
 import { queryOptions } from "@tanstack/react-query";
-import { $mainApi } from "../api-instance"
+import { $authApi, $mainApi } from "../api-instance"
 
 export const productService = {
     baseKey: 'products',
 
     getAll: async ({ category, minPrice, maxPrice, searchQuery }, { signal }) => {
-        const response = await $mainApi.get('/products', {
+        const response = await $authApi.get('/products', {
             params: {
                 category,
                 minPrice,

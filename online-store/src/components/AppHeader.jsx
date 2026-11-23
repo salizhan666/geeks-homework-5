@@ -1,10 +1,16 @@
 import { NavLink } from "react-router-dom"
+import { useSession } from "../hooks/useSession"
+import { useLogout } from "../store/auth/logout-store";
 
 export const AppHeader = () => {
+
+    const isAuth = useSession((state) => state.isAuth);
+    const { logout, isPending } = useLogout()
+
     return (
-        <>
-            <header className="flex gap-4 bg-teal-500">
-                <ul className="flex gap-4 py-4 container font-bold text-white">
+        <header className="bg-teal-500">
+            <nav className="container flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-4 font-bold text-white" aria-label="Main navigation">
+                <ul className="flex flex-wrap items-center gap-4">
                     <li>
                         <NavLink to='/'>Home</NavLink>
                     </li>
@@ -17,11 +23,28 @@ export const AppHeader = () => {
                     <li>
                         <NavLink to='cart'>Cart</NavLink>
                     </li>
-                    <li>
-                        <NavLink to='auth'>Auth</NavLink>
-                    </li>
                 </ul>
-            </header>
-        </>
+                {
+                    isAuth ?
+                        (
+                            <button
+                                disabled={isPending}
+                                onClick={logout}
+                                className="shrink-0 whitespace-nowrap cursor-pointer"
+                            >
+                                Logout
+                            </button>
+                        ) :
+                        (
+                            <NavLink
+                                to='auth'
+                                className="shrink-0 whitespace-nowrap cursor-pointer"
+                            >
+                                Sign in
+                            </NavLink>
+                        )
+                }
+            </nav>
+        </header>
     )
 }
