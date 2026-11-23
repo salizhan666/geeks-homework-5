@@ -1,9 +1,11 @@
 import { ShoppingCartOutlined, HeartOutlined, HeartFilled } from "@ant-design/icons"
 import { useToggleFavotire } from "../store/favorites/toggle-favorite"
+import { useAddProductToCart } from "../store/cart/add-product-to-cart"
 
 export const ProductCard = ({ product }) => {
 
   const { mutate, isPending } = useToggleFavotire()
+  const cart = useAddProductToCart(product._id)
 
   return (
     <article className="group flex h-full w-full max-w-sm flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -33,9 +35,9 @@ export const ProductCard = ({ product }) => {
           <p className="min-h-18 line-clamp-3 break-words text-sm leading-6 text-slate-500">{product?.description}</p>
         </div>
         <p className="mt-auto mb-4 text-xl font-bold leading-7 tabular-nums text-slate-900">{product?.price}$</p>
-        <button type="button" className="flex items-center justify-center gap-2 min-h-11 w-full cursor-pointer rounded-xl bg-teal-700 px-4 py-3 text-sm font-semibold text-white hover:bg-teal-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-700 active:bg-teal-900">
+        <button type="button" onClick={cart.handleSubmit} disabled={cart.isPending} className="flex items-center justify-center gap-2 min-h-11 w-full cursor-pointer rounded-xl bg-teal-700 px-4 py-3 text-sm font-semibold text-white hover:bg-teal-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-700 active:bg-teal-900 disabled:opacity-50">
           <ShoppingCartOutlined aria-hidden="true" />
-          В корзину
+          {cart.inCart ? 'В корзине' : 'В корзину'}
         </button>
       </div>
     </article>

@@ -1,10 +1,12 @@
 import { useMutation } from "@tanstack/react-query"
 import { authService } from "../../service/auth-service"
 import { useNavigate } from "react-router-dom"
+import { useSession } from "../../hooks/useSession"
 
 export const useRegister = () => {
 
     const navigate = useNavigate()
+    const setAuth = useSession(state => state.setAuth)
 
     const registerMutation = useMutation({
         mutationFn: async (registerData) => {
@@ -14,6 +16,7 @@ export const useRegister = () => {
 
         onSuccess: (data) => {
             localStorage.setItem('accessToken', data?.accessToken)
+            setAuth(true)
             navigate('/')
         },
 

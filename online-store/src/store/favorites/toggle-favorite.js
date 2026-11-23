@@ -1,9 +1,14 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { favoritesService } from "../../service/favorites-service"
 import { productService } from "../../service/product-service"
 
-export const useToggleFavotire = () => {
+export const useToggleFavotire = (productId) => {
     const queryClient = useQueryClient()
+    const { data: favorites, isFetching } = useQuery({
+        ...favoritesService.getFavoritesQueryOptions(),
+        enabled: Boolean(productId)
+    })
+    const isFavorite = productId ? favorites?.some(item => item._id === productId) : undefined
 
     const addMutation = useMutation({
         mutationFn: favoritesService.addToFavorites,
@@ -31,6 +36,8 @@ export const useToggleFavotire = () => {
 
     return {
         mutate: toggleMutation,
-        isPending: addMutation.isPending || removeMutation.isPending
+        toggle: () => toggleMutation(isFavorite, productId),
+        isFavorite,
+        isPending: addMutation.isPending || removeMutation.isPending || Boolean(productId && (isFetching || isFavorite === undefined))
     }
 }
