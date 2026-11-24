@@ -18,4 +18,25 @@ $authApi.interceptors.request.use(
     }
 )
 
+$authApi.interceptors.response.use(
+    (config) => config,
+    async (error) => {
+
+        const currentRequest = error.config
+
+        if (error.response.status == 401) {
+            try {
+                const { data } = await $mainApi.post('/auth/refresh');
+                localStorage.setItem('accessToken', data.accessToken);
+
+                return $authApi.request(currentRequest);
+            } catch (err) {
+                console.error(err.message);
+            }
+        }
+
+        throw error
+    }
+)
+
 export { $mainApi, $authApi }

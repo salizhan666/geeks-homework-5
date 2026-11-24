@@ -13,6 +13,8 @@ export const CartPage = () => {
     ...cartService.getCartQueryParams()
   })
 
+  if (isLoading) return <Loading isLoading />
+
   if (data.length === 0) {
     return (
       <section className="slideUp mx-auto my-12 flex w-full max-w-lg flex-col items-center rounded-2xl border border-slate-200 bg-white px-6 py-12 text-center shadow-sm sm:px-10">
@@ -32,7 +34,6 @@ export const CartPage = () => {
 
   return (
     <>
-      <Loading isLoading={isLoading} />
       <section>
         <div className="flex justify-end px-4 py-3">
           <button type="button" disabled={clearCart.isPending} onClick={() => clearCart.mutate()}
