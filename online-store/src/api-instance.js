@@ -31,6 +31,9 @@ $authApi.interceptors.response.use(
 
                 return $authApi.request(currentRequest);
             } catch (err) {
+                localStorage.removeItem('accessToken')
+                window.location.href = '/auth'
+
                 console.error(err.message);
             }
         }

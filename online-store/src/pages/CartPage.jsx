@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { cartService } from '../service/cart-service'
 import { CartProductCard } from '../components/CartProductCard'
+import { OrderForm } from '../components/OrderForm'
 import { Loading } from '../components/Loading'
 import { ShoppingCartOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { useClearCart } from '../store/cart/clear-cart'
+import { useCreateOrder } from '../store/order/create-order'
 
 export const CartPage = () => {
 
@@ -12,8 +14,11 @@ export const CartPage = () => {
   const { data, isLoading } = useQuery({
     ...cartService.getCartQueryParams()
   })
+  const createOrder = useCreateOrder(data)
 
   if (isLoading) return <Loading isLoading />
+
+  if (!data) return <p role="alert">Could not load your cart.</p>
 
   if (data.length === 0) {
     return (
@@ -36,7 +41,7 @@ export const CartPage = () => {
     <>
       <section>
         <div className="flex justify-end px-4 py-3">
-          <button type="button" disabled={clearCart.isPending} onClick={() => clearCart.mutate()}
+          <button type="button" disabled={clearCart.isPending || createOrder.isPending} onClick={() => clearCart.mutate()}
             className="rounded-xl bg-slate-100 px-4 py-2 hover:bg-slate-200 disabled:opacity-50">
             Delete All Cart
           </button>
@@ -45,7 +50,12 @@ export const CartPage = () => {
         {data.map(({ product, quantity }) => (
           <CartProductCard key={product._id} product={product} quantity={quantity} />
         ))}
-        <p className="px-4 py-5 text-right text-xl font-bold">Итого: {total.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} $</p>
+        <OrderForm
+          onSubmit={createOrder.mutate}
+          total={total}
+          disabled={clearCart.isPending}
+          isPending={createOrder.isPending}
+        />
       </section>
     </>
   )

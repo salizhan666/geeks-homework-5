@@ -5,6 +5,7 @@ import { useSession } from "../../hooks/useSession"
 import { productService } from "../../service/product-service"
 import { favoritesService } from "../../service/favorites-service"
 import { cartService } from "../../service/cart-service"
+import { orderService } from "../../service/order-service"
 
 export const useLogout = () => {
 
@@ -19,6 +20,7 @@ export const useLogout = () => {
             localStorage.removeItem('accessToken')
             reset()
             queryClient.removeQueries({ queryKey: [cartService.basekey] })
+            queryClient.removeQueries({ queryKey: [orderService.basekey] })
             queryClient.invalidateQueries({ queryKey: [productService.baseKey] })
             queryClient.invalidateQueries({ queryKey: [favoritesService.baseKey] })
             navigate('/')
